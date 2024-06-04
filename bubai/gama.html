@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Conhecimento Geral</title>
+    <link rel="stylesheet" href="gama.css">
+    <style>
+ 
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz de Conhecimento Geral</h1>
+
+        <div class="question">
+            <h2>Pergunta 1:</h2>
+            <p><strong>Nível de Dificuldade:</strong> ⭐</p>
+            <p>Enunciado: Qual é a capital da França?</p>
+            <ul class="options">
+                <li><input type="radio" name="q1" value="a"> A) Londres</li>
+                <li><input type="radio" name="q1" value="b"> B) Paris</li>
+            </ul>
+            <button onclick="responder('q1')">Responder</button>
+            <p id="feedback-q1" style="display: none;">[Resposta Correta: Parabéns! Você acertou!]</p>
+        </div>
+
+        <div class="question">
+            <h2>Pergunta 2:</h2>
+            <p><strong>Nível de Dificuldade:</strong> ⭐⭐</p>
+            <p>Enunciado: Quem escreveu "Dom Quixote"?</p>
+            <ul class="options">
+                <li><input type="radio" name="q2" value="a"> A) William Shakespeare</li>
+                <li><input type="radio" name="q2" value="b"> B) Miguel de Cervantes</li>
+            </ul>
+            <button onclick="responder('q2')">Responder</button>
+            <p id="feedback-q2" style="display: none;">[Resposta Correta: Parabéns! Você acertou!]</p>
+        </div>
+
+        <div class="question">
+            <h2>Pergunta 3:</h2>
+            <p><strong>Nível de Dificuldade:</strong> ⭐⭐⭐</p>
+            <p>Enunciado: Qual é o maior planeta do Sistema Solar?</p>
+            <ul class="options">
+                <li><input type="radio" name="q3" value="a"> A) Júpiter</li>
+                <li><input type="radio" name="q3" value="b"> B) Marte</li>
+            </ul>
+            <button onclick="responder('q3')">Responder</button>
+            <p id="feedback-q3" style="display: none;">[Resposta Correta: Parabéns! Você acertou!]</p>
+        </div>
+
+        <div class="question">
+            <h2>Pergunta 4:</h2>
+            <p><strong>Nível de Dificuldade:</strong> ⭐⭐⭐⭐</p>
+            <p>Enunciado: Quem pintou a Mona Lisa?</p>
+            <ul class="options">
+                <li><input type="radio" name="q4" value="a"> A) Pablo Picasso</li>
+                <li><input type="radio" name="q4" value="b"> B) Leonardo da Vinci</li>
+            </ul>
+            <button onclick="responder('q4')">Responder</button>
+            <p id="feedback-q4" style="display: none;">[Resposta Correta: Parabéns! Você acertou!]</p>
+        </div>
+
+        <div class="question">
+            <h2>Pergunta 5:</h2>
+            <p><strong>Nível de Dificuldade:</strong> ⭐⭐⭐⭐⭐</p>
+            <p>Enunciado: Quem foi o primeiro ser humano a pisar na Lua?</p>
+            <ul class="options">
+                <li><input type="radio" name="q5" value="a"> A) Neil Armstrong</li>
+                <li><input type="radio" name="q5" value="b"> B) Yuri Gagarin</li>
+            </ul>
+            <button onclick="responder('q5')">Responder</button>
+            <p id="feedback-q5" style="display: none;">[Resposta Correta: Parabéns! Você acertou!]</p>
+        </div>
+
+        <!-- Perguntas restantes... -->
+
+        <div class="feedback">
+            <p><strong>Feedback:</strong></p>
+            <p id="feedback-final" style="display: none;"></p>
+        </div>
+
+        <div id="timer">Timer: [00:00:00]</div>
+        <div id="score">Pontuação: [Pontos: 0]</div>
+    </div>
+
+    <script>
+       function responder(pergunta) {
+            var respostaCorreta;
+            var feedbackId = "feedback-" + pergunta;
+
+            // Identificar a resposta correta
+            switch (pergunta) {
+                case "q1":
+                    respostaCorreta = "b";
+                    break;
+                case "q2":
+                    respostaCorreta = "b";
+                    break;
+                case "q3":
+                    respostaCorreta = "a";
+                    break;
+                case "q4":
+                    respostaCorreta = "b";
+                    break;
+                case "q5":
+                    respostaCorreta = "a";
+                    break;
+                default:
+                    respostaCorreta = "";
+            }
+
+            // Verificar qual opção o usuário selecionou
+            var respostaUsuario;
+            var radios = document.getElementsByName(pergunta);
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    respostaUsuario = radios[i].value;
+                    break;
+                }
+            }
+
+            var feedback = document.getElementById(feedbackId);
+            if (respostaUsuario === respostaCorreta) {
+                feedback.innerHTML = "[Resposta Correta: Parabéns! Você acertou!]";
+            } else {
+                feedback.innerHTML = "[Resposta Incorreta: A resposta correta era: " + respostaCorreta.toUpperCase() + "]";
+            }
+            feedback.style.display = "block";
+
+            // Ocultar o botão de resposta
+            var button = document.querySelector("button[onclick=\"responder('" + pergunta + "')\"]");
+            button.style.display = "none";
+
+            // Exibir feedback final
+            var todasRespostas = document.querySelectorAll(".question");
+            var todasCorretas = true;
+            for (var j = 0; j < todasRespostas.length; j++) {
+                if (todasRespostas[j].querySelector("p[id^='feedback-q']").style.display !== "block") {
+                    todasCorretas = false;
+                    break;
+                }
+            }
+            if (todasCorretas) {
+                document.getElementById("feedback-final").innerHTML = "Parabéns! Você concluiu o quiz!";
+                document.getElementById("feedback-final").style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
