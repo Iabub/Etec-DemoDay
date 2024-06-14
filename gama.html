@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Conhecimento Geral</title>
+    <link rel="stylesheet" href="gama.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz de Conhecimento Geral</h1>
+
+        <div id="navigation">
+            <h2>Navegação</h2>
+            <ul id="question-list">
+                <li><a href="#" class="question-link" onclick="showQuestion('pergunta1')">1</a></li>
+                <li><a href="#" class="question-link" onclick="showQuestion('pergunta2')">2</a></li>
+                <li><a href="#" class="question-link" onclick="showQuestion('pergunta3')">3</a></li>
+                <li><a href="#" class="question-link" onclick="showQuestion('pergunta4')">4</a></li>
+                <li><a href="#" class="question-link" onclick="showQuestion('pergunta5')">5</a></li>
+                <li><a href="#" class="question-link" onclick="showQuestion('pergunta6')">6</a></li>
+                <li><a href="#" class="question-link" onclick="showQuestion('pergunta7')">7</a></li>
+            </ul>
+        </div>
+
+        <div class="question active" id="pergunta1">
+            <h2>Pergunta 1:</h2>
+            <p><strong>Nível de Dificuldade:</strong> ⭐</p>
+            <p>Enunciado: Qual é a capital da França?</p>
+            <ul class="options">
+                <li><input type="radio" name="q1" value="a"> A) Londres</li>
+                <li><input type="radio" name="q1" value="b"> B) Paris</li>
+                <li><input type="radio" name="q1" value="c"> C) Roma</li>
+                <li><input type="radio" name="q1" value="d"> D) Brasília</li>
+            </ul>
+            <button onclick="responder('q1', 'pergunta2')">Responder</button>
+            <button onclick="showQuestion('pergunta2')">Próxima Pergunta</button>
+            <p id="feedback-q1" style="display: none;">[Resposta Correta: Parabéns! Você acertou!]</p>
+        </div>
+
+        <div class="question" id="pergunta2">
+            <h2>Pergunta 2:</h2>
+            <p><strong>Nível de Dificuldade:</strong> ⭐⭐</p>
+            <p>Enunciado: Quem escreveu "Dom Quixote"?</p>
+            <ul class="options">
+                <li><input type="radio" name="q2" value="a"> A) William Shakespeare</li>
+                <li><input type="radio" name="q2" value="b"> B) Miguel de Cervantes</li>
+                <li><input type="radio" name="q2" value="c"> C) Machado de Assis</li>
+                <li><input type="radio" name="q2" value="d"> D) Fernando Pessoa</li>
+            </ul>
+            <button onclick="responder('q2', 'pergunta3')">Responder</button>
+            <button onclick="showQuestion('pergunta3')">Próxima Pergunta</button>
+            <p id="feedback-q2" style="display: none;">[Resposta Correta: Parabéns! Você acertou!]</p>
+        </div>
+
+        <!-- Adicione mais perguntas aqui -->
+
+        <div class="feedback">
+            <p><strong>Feedback:</strong></p>
+            <p id="feedback-final" style="display: none;"></p>
+        </div>
+
+        <div id="timer">Timer: [00:00:00]</div>
+        <div id="score">Pontuação: [Pontos: 0]</div>
+    </div>
+
+    <script>
+        function showQuestion(questionId) {
+            var questions = document.querySelectorAll('.question');
+            for (var i = 0; i < questions.length; i++) {
+                questions[i].classList.remove('active');
+            }
+            document.getElementById(questionId).classList.add('active');
+        }
+
+        function responder(pergunta, proximaPerguntaId) {
+            var respostaCorreta;
+            var feedbackId = "feedback-" + pergunta;
+
+            // Identificar a resposta correta
+            switch (pergunta) {
+                case "q1":
+                    respostaCorreta = "b";
+                    break;
+                case "q2":
+                    respostaCorreta = "b";
+                    break;
+                // Adicione os casos para as outras perguntas
+            }
+
+            // Verificar qual opção o usuário selecionou
+            var respostaUsuario;
+            var radios = document.getElementsByName(pergunta);
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    respostaUsuario = radios[i].value;
+                    break;
+                }
+            }
+
+            var feedback = document.getElementById(feedbackId);
+            if (respostaUsuario === respostaCorreta) {
+                feedback.innerHTML = "[Resposta Correta: Parabéns! Você acertou!]";
+            } else {
+                feedback.innerHTML = "[Resposta Incorreta: A resposta correta era: " + respostaCorreta.toUpperCase() + "]";
+            }
+            feedback.style.display = "block";
+
+            // Ocultar o botão de resposta
+            var button = document.querySelector("button[onclick=\"responder('" + pergunta + "', '" + proximaPerguntaId + "')\"]");
+            button.style.display = "none";
+
+            // Exibir feedback final
+            var todasRespostas = document.querySelectorAll(".question");
+            var todasCorretas = true;
+            for (var j = 0; j < todasRespostas.length; j++) {
+                if (todasRespostas[j].querySelector("p[id^='feedback-q']").style.display !== "block") {
+                    todasCorretas = false;
+                    break;
+                }
+            }
+            if (todasCorretas) {
+                document.getElementById("feedback-final").innerHTML = "Parabéns! Você concluiu o quiz!";
+                document.getElementById("feedback-final").style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
